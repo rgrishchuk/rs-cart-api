@@ -1,0 +1,24 @@
+CREATE TYPE status_enum AS ENUM ('OPEN', 'ORDERED');
+
+CREATE TABLE carts (
+  id uuid PRIMARY KEY,
+  user_id uuid NOT NULL,
+  created_at date NOT NULL,
+  updated_at date NOT NULL,
+  status status_enum NOT NULL
+);
+
+CREATE TABLE cart_items (
+  cart_id uuid REFERENCES carts(id),
+  product_id uuid,
+  count integer
+);
+
+INSERT INTO carts (id, user_id, created_at, updated_at, status)
+VALUES
+  ('cd49f9b8-c2ee-4d7a-85c2-3937d798a2ed', 'f57585c1-9a9c-4e70-a1ad-4a4ca4fa4bb6', '2023-03-25', '2023-03-25', 'OPEN'),
+  ('afce2df2-02b5-4e13-b083-4e0b1761092d', 'f57585c1-9a9c-4e70-a1ad-4a4ca4fa4bb6', '2023-03-24', '2023-03-24', 'ORDERED');
+
+INSERT INTO cart_items (cart_id, product_id, count)
+VALUES
+  ('cd49f9b8-c2ee-4d7a-85c2-3937d798a2ed', 'd24588e8-32fb-4d52-9a2a-ee8da7457a0d', 2);
